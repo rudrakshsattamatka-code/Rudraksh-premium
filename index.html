@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rudraksh - Login</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; padding: 20px; text-align: center; }
+        input, button { width: 100%; padding: 12px; margin: 8px 0; box-sizing: border-box; }
+        button { background-color: #4CAF50; color: white; border: none; cursor: pointer; }
+        button:hover { opacity: 0.8; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Rudraksh</h1>
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+    <p class="error" id="errorMsg"></p>
+    <p>New user? Contact us on WhatsApp to get access.</p>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCXL6EiiLg_3lILCOSA_iFgeL8Y2nPEEnw",
+            authDomain: "rudraksh-premium.firebaseapp.com",
+            projectId: "rudraksh-premium",
+            storageBucket: "rudraksh-premium.firebasestorage.app",
+            messagingSenderId: "99880475040",
+            appId: "1:99880475040:web:c64c708e9bec7fed0a6cc5"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        document.getElementById('loginBtn').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                // Redirect will be handled by onAuthStateChanged
+            } catch (error) {
+                errorMsg.textContent = error.message;
+            }
+        });
+
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                // Check subscription status
+                const userDoc = await db.collection('users').doc(user.uid).get();
+                if (userDoc.exists) {
+                    const data = userDoc.data();
+                    if (data.approved && data.plan) {
+                        // Approved user -> go to dashboard
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        // Not approved -> go to plans page
+                        window.location.href = 'plans.html';
+                    }
+                } else {
+                    // User document missing – treat as not approved (should not happen if you create manually)
+                    window.location.href = 'plans.html';
+                }
+            } else {
+                // Stay on login page
+            }
+        });
+    </script>
+</body>
+</html>
