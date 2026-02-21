@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rudraksh - Market Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+        .pair { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .headline { font-weight: bold; }
+        .result { margin-top: 5px; color: #555; }
+        #back { margin-bottom: 20px; display: inline-block; cursor: pointer; color: blue; }
+        #logout { float: right; cursor: pointer; color: blue; }
+    </style>
+</head>
+<body>
+    <span id="logout">Logout</span>
+    <h1 id="marketName"></h1>
+    <div id="back">← Back to Dashboard</div>
+    <div id="pairs"></div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = { /* your config */ };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        document.getElementById('logout').addEventListener('click', () => auth.signOut());
+        document.getElementById('back').addEventListener('click', () => window.location.href = 'dashboard.html');
+
+        // Get market id from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const marketId = urlParams.get('id') || 'market1';
+
+        auth.onAuthStateChanged(async (user) => {
+            if (!user) {
+                window.location.href = 'index.html';
+                return;
+            }
+            // Verify user is approved
+            const userDoc = await db.collection('users').doc(user.uid).get();
+            if (!userDoc.exists || !userDoc.data().approved) {
+                window.location.href = 'plans.html';
+                return;
+            }
+            loadMarketData(marketId);
+        });
+
+        async function loadMarketData(id) {
+            const doc = await db.collection('markets').doc(id).get();
+            if (!doc.exists) {
+                document.getElementById('marketName').textContent = 'Market not found';
+                return;
+            }
+            const data = doc.data();
+            document.getElementById('marketName').textContent = data.name || id;
+
+            const container = document.getElementById('pairs');
+            for (let i = 1; i <= 4; i++) {
+                const headline = data[`headline${i}`] || `Headline ${i}`;
+                const result = data[`result${i}`] || `Result ${i}`;
+                const div = document.createElement('div');
+                div.className = 'pair';
+                div.innerHTML = `<div class="headline">${headline}</div><div class="result">${result}</div>`;
+                container.appendChild(div);
+            }
+        }
+    </script>
+</body>
+</html>
