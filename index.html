@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>WIN777 - Official Android App | Play Store Theme</title>
+    <title>WIN777 - Official Android App | Play Store Style</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Google Sans', 'Segoe UI', Roboto, system-ui, -apple-system, 'Helvetica Neue', sans-serif;
-            background: #f1f3f7;  /* Play store light background */
+            background: #f1f3f7;
             color: #1f2a3e;
             scroll-behavior: smooth;
         }
@@ -32,7 +32,7 @@
             padding: 1.2rem 1.5rem;
         }
 
-        /* Navigation (Play Store Like) */
+        /* Navigation */
         .navbar {
             display: flex;
             justify-content: space-between;
@@ -49,18 +49,14 @@
             align-items: center;
             gap: 12px;
         }
-        .logo-icon {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(145deg, #FFB347, #FF8C1A);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            font-weight: bold;
-            color: white;
-            box-shadow: 0 2px 8px rgba(255,140,26,0.3);
+        /* Logo using user provided image */
+        .logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            object-fit: cover;
+            background: #fff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         .logo-text {
             font-size: 1.7rem;
@@ -85,7 +81,7 @@
             color: #FF8C1A;
         }
 
-        /* Hero / App header (Play store style) */
+        /* Hero / App header */
         .app-header {
             display: flex;
             flex-wrap: wrap;
@@ -99,14 +95,16 @@
         .app-icon-large {
             width: 128px;
             height: 128px;
-            background: linear-gradient(145deg, #FFB347, #FF6F00);
             border-radius: 28px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
+            overflow: hidden;
             box-shadow: 0 16px 28px rgba(0,0,0,0.15);
-            transition: 0.2s;
+            background: white;
+        }
+        .app-icon-large img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
         .app-title {
             flex: 1;
@@ -160,8 +158,18 @@
         .download-btn-pulse:active {
             transform: scale(0.97);
         }
+        .file-size-badge {
+            background: #e8f0fe;
+            border-radius: 30px;
+            padding: 4px 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 8px;
+            color: #1967d2;
+        }
 
-        /* screenshots grid */
+        /* Screenshots - clickable, no text under images */
         .screenshots-section {
             margin: 2.5rem 0;
         }
@@ -177,15 +185,16 @@
             display: flex;
             flex-wrap: wrap;
             gap: 1.2rem;
-            justify-content: center;
+            justify-content: flex-start;
         }
         .ss-item {
             background: white;
             border-radius: 24px;
             padding: 8px;
-            width: 170px;
+            width: 160px;
             transition: 0.2s;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
         }
         .ss-item img {
             width: 100%;
@@ -194,14 +203,52 @@
             object-fit: cover;
             background: #f0f2f6;
         }
-        .ss-item p {
-            text-align: center;
-            margin-top: 8px;
-            font-weight: 500;
-            font-size: 0.85rem;
+        .ss-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
         }
 
-        /* reviews (Play store style) */
+        /* Lightbox modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 28px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #fff;
+            font-size: 45px;
+            font-weight: bold;
+            cursor: pointer;
+            background: rgba(0,0,0,0.6);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .close-modal:hover {
+            color: #FF8C1A;
+        }
+
+        /* Reviews - no dates */
         .reviews-container {
             background: white;
             border-radius: 32px;
@@ -218,6 +265,7 @@
         .review-stars {
             color: #FFB347;
             letter-spacing: 2px;
+            margin: 4px 0;
         }
         .review-text {
             color: #2c3e4e;
@@ -261,11 +309,13 @@
             .container { padding: 1rem; }
             .navbar { padding: 0.6rem 1rem; }
             .logo-text { font-size: 1.3rem; }
+            .gallery { justify-content: center; }
+            .ss-item { width: 140px; }
         }
 
-        .install-toast {
+        .toast-msg {
             position: fixed;
-            bottom: 20px;
+            bottom: 25px;
             left: 50%;
             transform: translateX(-50%);
             background: #1f2a3e;
@@ -273,14 +323,14 @@
             padding: 12px 24px;
             border-radius: 60px;
             font-size: 0.9rem;
-            z-index: 200;
+            z-index: 1100;
             box-shadow: 0 8px 20px rgba(0,0,0,0.2);
             animation: fadeUp 0.3s ease;
             pointer-events: none;
         }
         @keyframes fadeUp {
             from { opacity: 0; bottom: 0; }
-            to { opacity: 1; bottom: 20px; }
+            to { opacity: 1; bottom: 25px; }
         }
     </style>
 </head>
@@ -288,7 +338,8 @@
 
 <nav class="navbar">
     <div class="logo-area">
-        <div class="logo-icon">W7</div>
+        <!-- Logo from user provided image link -->
+        <img class="logo-img" src="https://i.imgur.com/UnYKSUj.jpeg" alt="WIN777 Logo" onerror="this.src='https://via.placeholder.com/42?text=W7'">
         <span class="logo-text">WIN777</span>
     </div>
     <div class="nav-links">
@@ -300,10 +351,10 @@
 </nav>
 
 <div class="container">
-    <!-- App hero header - play store theme -->
+    <!-- App header section -->
     <div class="app-header ps-card" id="install">
         <div class="app-icon-large">
-            🎰
+            <img src="https://i.imgur.com/UnYKSUj.jpeg" alt="WIN777 Icon" onerror="this.src='https://via.placeholder.com/128?text=WIN777'">
         </div>
         <div class="app-title">
             <h1>WIN777 · Win Big</h1>
@@ -313,54 +364,41 @@
                 <span class="rating-chip">📥 5,00,000+ downloads</span>
                 <span class="rating-chip">🛡️ No Virus Guarantee</span>
             </div>
-            <button class="download-btn-pulse" id="directDownloadBtn">⬇️ Download APK (48 MB) · Direct Install</button>
-            <p style="margin-top: 12px; font-size: 0.8rem; color: #2e7d32;">✅ Compatible with Android 5.0+ | Instant install after download</p>
+            <button class="download-btn-pulse" id="directDownloadBtn">⬇️ Download APK (4.4 MB) · Direct Install</button>
+            <div class="file-size-badge">📦 APK size: 4.4 MB | Light & Fast</div>
+            <p style="margin-top: 12px; font-size: 0.8rem; color: #2e7d32;">✅ Android 5.0+ | Instant install after download</p>
         </div>
     </div>
 
-    <!-- Screenshots Gallery (Play Store style showcase) -->
+    <!-- Screenshots Gallery: no text under images, click to enlarge -->
     <div class="screenshots-section" id="screenshots">
-        <div class="section-title">📸 App preview</div>
-        <div class="gallery">
-            <div class="ss-item"><img src="https://i.imgur.com/iHqT4wW.jpeg" alt="Home"><p>Home Screen</p></div>
-            <div class="ss-item"><img src="https://i.imgur.com/2258Sct.jpeg" alt="Games"><p>Game Lobby</p></div>
-            <div class="ss-item"><img src="https://i.imgur.com/ADI8Jze.jpeg" alt="Slots"><p>Slot Games</p></div>
-            <div class="ss-item"><img src="https://i.imgur.com/seAwK8Z.jpeg" alt="Win"><p>Jackpot Win</p></div>
-            <div class="ss-item"><img src="https://i.imgur.com/SWv7SQM.jpeg" alt="Rewards"><p>Rewards Zone</p></div>
-            <div class="ss-item"><img src="https://i.imgur.com/aTpJAXt.jpeg" alt="Refer"><p>Refer & Earn</p></div>
+        <div class="section-title">📸 App preview (tap to expand)</div>
+        <div class="gallery" id="imageGallery">
+            <div class="ss-item" data-img="https://i.imgur.com/iHqT4wW.jpeg"><img src="https://i.imgur.com/iHqT4wW.jpeg" alt="preview"></div>
+            <div class="ss-item" data-img="https://i.imgur.com/2258Sct.jpeg"><img src="https://i.imgur.com/2258Sct.jpeg" alt="preview"></div>
+            <div class="ss-item" data-img="https://i.imgur.com/ADI8Jze.jpeg"><img src="https://i.imgur.com/ADI8Jze.jpeg" alt="preview"></div>
+            <div class="ss-item" data-img="https://i.imgur.com/seAwK8Z.jpeg"><img src="https://i.imgur.com/seAwK8Z.jpeg" alt="preview"></div>
+            <div class="ss-item" data-img="https://i.imgur.com/SWv7SQM.jpeg"><img src="https://i.imgur.com/SWv7SQM.jpeg" alt="preview"></div>
+            <div class="ss-item" data-img="https://i.imgur.com/aTpJAXt.jpeg"><img src="https://i.imgur.com/aTpJAXt.jpeg" alt="preview"></div>
         </div>
     </div>
 
-    <!-- Ratings & features summary -->
+    <!-- Feature highlights -->
     <div style="display: flex; flex-wrap: wrap; gap: 1.2rem; justify-content: space-between; margin: 1.5rem 0;">
-        <div class="ps-card" style="flex:1; padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">🏆</div>
-            <div>#1 Trending Game</div>
-            <small>India 2025</small>
-        </div>
-        <div class="ps-card" style="flex:1; padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">⚡</div>
-            <div>Instant Withdrawal</div>
-            <small>UPI / Bank Transfer</small>
-        </div>
-        <div class="ps-card" style="flex:1; padding: 1rem; text-align: center;">
-            <div style="font-size: 2rem;">🔒</div>
-            <div>Secure & Encrypted</div>
-            <small>100% Safe</small>
-        </div>
+        <div class="ps-card" style="flex:1; padding: 1rem; text-align: center;"><div style="font-size: 2rem;">🏆</div><div>#1 Trending Game</div><small>India 2025</small></div>
+        <div class="ps-card" style="flex:1; padding: 1rem; text-align: center;"><div style="font-size: 2rem;">⚡</div><div>Instant Withdrawal</div><small>UPI / Bank</small></div>
+        <div class="ps-card" style="flex:1; padding: 1rem; text-align: center;"><div style="font-size: 2rem;">🔒</div><div>Secure & Encrypted</div><small>100% Safe</small></div>
     </div>
 
-    <!-- Reviews section with Indian names + fresh rating -->
+    <!-- Reviews section - NO DATES displayed -->
     <div id="reviews">
         <div class="section-title">⭐ User reviews · 52,340+ ratings</div>
-        <div class="reviews-container" id="reviewsList">
-            <!-- dynamic reviews injected -->
-        </div>
+        <div class="reviews-container" id="reviewsList"></div>
 
-        <!-- Write a review section -->
+        <!-- Add review form (simulated: only shows 'Submitted' message, no actual storage) -->
         <div class="add-review">
             <h4>📝 Rate WIN777</h4>
-            <input type="text" id="reviewerName" placeholder="Your name (e.g. Ankit Sharma)" value="Rohit K.">
+            <input type="text" id="reviewerName" placeholder="Your name (e.g. Ankit Sharma)" value="Rahul K.">
             <select id="ratingSelect">
                 <option value="5">★★★★★ (5)</option>
                 <option value="4">★★★★☆ (4)</option>
@@ -376,89 +414,111 @@
 
 <footer>
     <p>© 2025 WIN777 — Official APK Distribution. All rights reserved.</p>
-    <p style="margin-top: 6px;">Download and install directly — No extra permissions needed</p>
+    <p style="margin-top: 6px;">Secure download · No hidden charges</p>
 </footer>
 
+<!-- Lightbox Modal for enlarged images -->
+<div id="imageModal" class="modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImg">
+</div>
+
 <script>
-    // ---------- DIRECT APK DOWNLOAD USING YOUR GITHUB RELEASE LINK ----------
-    // CRITICAL: Replace with your working APK link (the one that auto-downloads)
+    // ---------- DIRECT APK DOWNLOAD (4.4 MB) using GitHub release link ----------
     const WIN777_APK_URL = "https://github.com/rudrakshsattamatka-code/Rudraksh-premium/releases/download/V1.0.4/WIN777.apk";
     
-    // Direct download function (no popup, no warning, immediate)
+    // Direct download - starts immediately without extra warnings
     function startDirectDownload() {
-        // Create an invisible anchor element with download attribute to enforce download
         const link = document.createElement('a');
         link.href = WIN777_APK_URL;
-        // The 'download' attribute suggests to browser to download instead of navigate
         link.download = "WIN777.apk";
         link.target = "_blank";
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-        
-        // Show friendly toast notification that APK download started
-        showToast("📲 Download started! WIN777.apk will be saved. Tap to install after completion.");
+        showToastMessage("📲 Download started! WIN777 (4.4 MB) will be saved. Tap to install.");
     }
     
-    // Toast message helper
-    let toastTimeout;
-    function showToast(msg) {
-        const existingToast = document.querySelector('.install-toast');
-        if(existingToast) existingToast.remove();
+    function showToastMessage(msg) {
+        const existing = document.querySelector('.toast-msg');
+        if(existing) existing.remove();
         const toast = document.createElement('div');
-        toast.className = 'install-toast';
+        toast.className = 'toast-msg';
         toast.innerText = msg;
         document.body.appendChild(toast);
-        if(toastTimeout) clearTimeout(toastTimeout);
-        toastTimeout = setTimeout(() => {
-            if(toast) toast.remove();
-        }, 4000);
+        setTimeout(() => { if(toast) toast.remove(); }, 3500);
     }
     
-    // ---------- PLAY STORE INDIAN REVIEWS (Realistic names, 5 Lakh+ vibe) ----------
-    const defaultReviews = [
-        { name: "Rahul Sharma", rating: 5, text: "Best gaming app! Won ₹7500 in first week. Download directly and install, smooth experience.", date: "2025-05-30" },
-        { name: "Neha Verma", rating: 5, text: "Absolutely love the interface. Withdrawal is fast. 5 stars ⭐⭐⭐⭐⭐", date: "2025-05-29" },
-        { name: "Amit Patil", rating: 5, text: "No lag, real money games. Trusted app with 5 Lakh downloads. Direct install works perfectly.", date: "2025-05-28" },
-        { name: "Priya Singh", rating: 4, text: "Very addictive games! Support team replies quickly. One suggestion: add more slot themes.", date: "2025-05-27" },
-        { name: "Vikram Rathore", rating: 5, text: "I've installed via direct APK — no errors, seamless. Genuine app for earning.", date: "2025-05-26" },
-        { name: "Anjali Mehta", rating: 5, text: "Play store theme looks great. And download starts immediately, no warning. Best decision!", date: "2025-05-25" },
-        { name: "Rajesh Yadav", rating: 5, text: "WIN777 is my daily driver for rewards. 5 stars because direct install is smooth.", date: "2025-05-24" },
-        { name: "Sneha Reddy", rating: 5, text: "Super fun and safe. App logo is awesome, UI gives play store vibes. Highly recommended!", date: "2025-05-23" }
-    ];
-    
-    let reviewsArray = [];
-    
-    function loadReviewsFromStorage() {
-        const stored = localStorage.getItem("win777_reviews_data");
-        if(stored) {
-            reviewsArray = JSON.parse(stored);
-        } else {
-            reviewsArray = [...defaultReviews];
-            saveReviews();
-        }
-        renderReviews();
+    // ---------- CLICKABLE PREVIEW IMAGES (Lightbox) ----------
+    function initLightbox() {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImg');
+        const closeBtn = document.querySelector('.close-modal');
+        const galleryItems = document.querySelectorAll('.ss-item');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', (e) => {
+                const imgElement = item.querySelector('img');
+                if(imgElement && imgElement.src) {
+                    modal.style.display = 'flex';
+                    modalImg.src = imgElement.src;
+                }
+            });
+        });
+        
+        closeBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+        modal.onclick = function(e) {
+            if(e.target === modal) modal.style.display = 'none';
+        };
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Escape' && modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            }
+        });
     }
     
-    function saveReviews() {
-        localStorage.setItem("win777_reviews_data", JSON.stringify(reviewsArray));
-    }
-    
-    function renderReviews() {
-        const container = document.getElementById('reviewsList');
-        if(!container) return;
-        if(reviewsArray.length === 0) {
-            container.innerHTML = '<div class="review-card">No reviews yet. Be the first to review!</div>';
+    // ---------- REVIEW SUBMISSION: only shows "Submitted" message, does NOT add to list ----------
+    function handleMockReviewSubmit() {
+        const nameInput = document.getElementById('reviewerName');
+        const ratingSelect = document.getElementById('ratingSelect');
+        const reviewTextarea = document.getElementById('reviewMsg');
+        const name = nameInput ? nameInput.value.trim() : "User";
+        const rating = ratingSelect ? ratingSelect.value : "5";
+        const reviewMsg = reviewTextarea ? reviewTextarea.value.trim() : "";
+        
+        if(reviewMsg === "") {
+            showToastMessage("⚠️ Please write something before submitting.");
             return;
         }
-        // show latest reviews first (newest on top)
-        const reversed = [...reviewsArray].reverse();
-        container.innerHTML = reversed.map(rev => `
+        // Show submitted message, no actual review added (as requested)
+        showToastMessage(`✅ Submitted! Thank you ${name || "User"} for your ${'⭐'.repeat(parseInt(rating))} rating.`);
+        // Clear textarea but keep placeholder
+        if(reviewTextarea) reviewTextarea.value = "";
+    }
+    
+    // ---------- STATIC INDIAN REVIEWS (no dates, fixed content) ----------
+    const staticReviews = [
+        { name: "Rahul Sharma", rating: 5, text: "Amazing app! Withdrawal within hours. Download size is just 4.4 MB, super fast install." },
+        { name: "Neha Verma", rating: 5, text: "Absolutely love the interface and rewards. Genuine app with 5 lakh downloads!" },
+        { name: "Amit Patil", rating: 5, text: "No lag, real money games. The screenshot preview is brilliant. Direct install works flawlessly." },
+        { name: "Priya Singh", rating: 4, text: "Very addictive games! Just love the app icon and smooth UI." },
+        { name: "Vikram Rathore", rating: 5, text: "Best decision to download WIN777. Click to enlarge screenshots are great feature." },
+        { name: "Anjali Mehta", rating: 5, text: "Play Store theme looks amazing. Download directly and install, no errors. 5 stars!" },
+        { name: "Rajesh Yadav", rating: 5, text: "WIN777 is my daily rewards app. 4.4 MB only, extremely lightweight." },
+        { name: "Sneha Reddy", rating: 5, text: "Super fun and safe. The new logo is eye-catching. Highly recommended!" }
+    ];
+    
+    function renderStaticReviews() {
+        const container = document.getElementById('reviewsList');
+        if(!container) return;
+        // No dates anywhere
+        container.innerHTML = staticReviews.map(rev => `
             <div class="review-card">
                 <div class="reviewer-name">${escapeHtml(rev.name)}</div>
                 <div class="review-stars">${'⭐'.repeat(rev.rating)}${rev.rating < 5 ? ' ☆'.repeat(5-rev.rating) : ''}</div>
                 <div class="review-text">${escapeHtml(rev.text)}</div>
-                <div style="font-size:0.7rem; color:#7f8c8d;">📅 ${rev.date || 'Recently'}</div>
             </div>
         `).join('');
     }
@@ -473,99 +533,34 @@
         });
     }
     
-    function addNewReview(name, rating, text) {
-        if(!name.trim() || !text.trim()) {
-            alert("Please enter your name and review.");
-            return false;
-        }
-        const today = new Date().toISOString().slice(0,10);
-        const newRev = {
-            name: name.trim(),
-            rating: parseInt(rating),
-            text: text.trim(),
-            date: today
-        };
-        reviewsArray.push(newRev);
-        saveReviews();
-        renderReviews();
-        return true;
-    }
-    
-    // ---- EVENT LISTENERS ----
+    // ----- DOMContentLoaded: initialize everything -----
     document.addEventListener("DOMContentLoaded", () => {
-        // 1. Setup direct download for both buttons (also maybe any future download button)
+        // Download button
         const downloadBtn = document.getElementById("directDownloadBtn");
         if(downloadBtn) {
-            // Remove any previous listeners
-            downloadBtn.removeEventListener("click", startDirectDownload);
             downloadBtn.addEventListener("click", (e) => {
                 e.preventDefault();
                 startDirectDownload();
             });
         }
         
-        // 2. Reviews logic
-        loadReviewsFromStorage();
+        // Lightbox for clickable screenshots
+        initLightbox();
         
+        // Render static reviews (no dates ever)
+        renderStaticReviews();
+        
+        // POST REVIEW BUTTON: only shows "Submitted" message (no review added to list)
         const postBtn = document.getElementById("postReviewBtn");
         if(postBtn) {
-            postBtn.addEventListener("click", () => {
-                const nameInput = document.getElementById("reviewerName");
-                const ratingSel = document.getElementById("ratingSelect");
-                const textArea = document.getElementById("reviewMsg");
-                const name = nameInput ? nameInput.value : "Anonymous";
-                const rating = ratingSel ? ratingSel.value : "5";
-                const reviewTxt = textArea ? textArea.value : "";
-                if(addNewReview(name, rating, reviewTxt)) {
-                    if(textArea) textArea.value = "";
-                    showToast("✅ Thanks! Your review appears instantly.");
-                } else {
-                    showToast("⚠️ Fill name & review message");
-                }
+            postBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                handleMockReviewSubmit();
             });
         }
         
-        // 3. Optional: small tweak so any external download also works
-        console.log("WIN777 ready — Direct APK download from GitHub release");
-        
-        // If you want to show fallback when clicking on any element with class .download-btn-pulse (already covered)
-        // Additionally, provide installation guide after download: because download starts directly, user will get apk.
+        console.log("WIN777 ready: preview images clickable, logo updated, review submit shows only message, dates removed.");
     });
-    
-    // Additional note: The APK will be downloaded natively. On Android, opening the APK will prompt install.
-    // No warnings: because we are using direct download attribute, browsers handle as file download.
-    // No "this file may be harmful" - since it's from github release, most browsers trust but still may show standard APK warning.
-    // We cannot bypass Android's native install prompt, but the download itself is direct without extra popup.
-    // Perfectly safe for users.
-    
-    // Also add install hint after download
-    window.addEventListener('load', () => {
-        // In case someone wants to know about install steps, show tiny tip after first download click? We'll just show toast when download triggered.
-        console.log("ready for win777 play store theme");
-    });
-    
-    // For seamless Play Store appearance: Changing default logo pattern but keep WIN777 identity.
-    // I have used custom icon and gradient, consistent with app name.
 </script>
-
-<!-- Add a small style to mimic "play store" app info micro interaction -->
-<style>
-    .download-btn-pulse {
-        transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    }
-    .download-btn-pulse:hover {
-        transform: scale(1.02);
-        box-shadow: 0 12px 22px rgba(255, 98, 0, 0.5);
-    }
-    .ps-card {
-        transition: box-shadow 0.2s;
-    }
-    .ps-card:hover {
-        box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    }
-    ::selection {
-        background: #FFD0A4;
-    }
-</style>
 </body>
 </html>
